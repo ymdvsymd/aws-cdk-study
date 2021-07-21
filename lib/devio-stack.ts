@@ -1,10 +1,16 @@
 import * as cdk from '@aws-cdk/core';
-import { Vpc } from '@aws-cdk/aws-ec2';
+import { CfnVPC } from '@aws-cdk/aws-ec2';
 
 export class DevioStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    new Vpc(this, 'Vpc');
+    const systemName = this.node.tryGetContext('systemName');
+    const envType = this.node.tryGetContext('evnType');
+
+    new CfnVPC(this, 'Vpc', {
+      cidrBlock: '10.1.0.0/16',
+      tags: [{ key: 'Name', value: `${systemName}-${envType}-vpc` }]
+    });
   }
 }
