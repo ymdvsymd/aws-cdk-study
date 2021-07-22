@@ -1,16 +1,14 @@
 import * as cdk from '@aws-cdk/core';
-import { CfnVPC } from '@aws-cdk/aws-ec2';
+import { Vpc } from './resources/vpc';
+import { Subnet } from './resources/subnet';
+import { InternetGateway } from './resources/internetGateway';
 
 export class DevioStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    const systemName = this.node.tryGetContext('systemName');
-    const envType = this.node.tryGetContext('evnType');
-
-    new CfnVPC(this, 'Vpc', {
-      cidrBlock: '10.1.0.0/16',
-      tags: [{ key: 'Name', value: `${systemName}-${envType}-vpc` }]
-    });
+    const vpc = new Vpc(this);
+    const subnet = new Subnet(this, vpc.self);
+    const igw = new InternetGateway(this, vpc.self);
   }
 }
