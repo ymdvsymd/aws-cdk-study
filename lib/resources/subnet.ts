@@ -1,6 +1,6 @@
 import * as cdk from '@aws-cdk/core';
 import { CfnSubnet, CfnVPC } from '@aws-cdk/aws-ec2';
-import { Resource } from './abstracts/resource';
+import { Resource } from './core/resource';
 
 export class Subnet extends Resource {
   readonly web1a: CfnSubnet;
@@ -15,21 +15,20 @@ export class Subnet extends Resource {
   constructor(scope: cdk.Construct, vpc: CfnVPC) {
     super(scope);
     this.vpc = vpc;
-    this.web1a = this.create('web', '10.1.11.0/24', 'ap-northeast-1a');
-    this.web1c = this.create('web', '10.1.12.0/24', 'ap-northeast-1c');
-    this.app1a = this.create('app', '10.1.21.0/24', 'ap-northeast-1a');
-    this.app1c = this.create('app', '10.1.22.0/24', 'ap-northeast-1c');
-    this.db1a = this.create('db', '10.1.31.0/24', 'ap-northeast-1a');
-    this.db1c = this.create('db', '10.1.32.0/24', 'ap-northeast-1c');
+    this.web1a = this.create('web', 'a', '10.1.11.0/24');
+    this.web1c = this.create('web', 'c', '10.1.12.0/24');
+    this.app1a = this.create('app', 'a', '10.1.21.0/24');
+    this.app1c = this.create('app', 'c', '10.1.22.0/24');
+    this.db1a = this.create('db', 'a', '10.1.31.0/24');
+    this.db1c = this.create('db', 'c', '10.1.32.0/24');
   }
 
-  private create(type: string, cidr: string, az: string): CfnSubnet {
-    const azId = az.slice(-1);
-    return new CfnSubnet(this.scope, `Subnet${type.charAt(0).toUpperCase() + type.slice(1)}1${azId}`, {
+  private create(purpose: string, azSuffix: string, cidr: string): CfnSubnet {
+    return new CfnSubnet(this.scope, `Subnet${purpose.charAt(0).toUpperCase() + purpose.slice(1)}1${azSuffix}`, {
       cidrBlock: cidr,
       vpcId: this.vpc.ref,
-      availabilityZone: az,
-      tags: [{ key: 'Name', value: this.getResourceName(`subnet-${type}-1${azId}`) }]
+      availabilityZone: `ap-northeast-1${azSuffix}`,
+      tags: [{ key: 'Name', value: this.getFullName(`subnet-${purpose}-1${azSuffix}`) }]
     });
   }
 }
