@@ -17,8 +17,8 @@ export abstract class Resource {
   }
 }
 
-export function upperCamelCase(name: string) {
-  return capitalize(camelCase(name));
+export function upperCamelCase(str: string) {
+  return capitalize(camelCase(str));
 }
 
 export function camelCase(str: string) {
