@@ -1,8 +1,8 @@
 import { expect, countResources, haveResource } from '@aws-cdk/assert';
-import { createTestTarget } from '../context'
+import { testTarget } from '../context'
 
 test('ElasticIp', () => {
-  const stack = createTestTarget();
+  const stack = testTarget();
   expect(stack).to(countResources('AWS::EC2::EIP', 2));
   expect(stack).to(haveResource('AWS::EC2::EIP', {
     Domain: 'vpc',

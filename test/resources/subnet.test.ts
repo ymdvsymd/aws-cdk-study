@@ -1,8 +1,8 @@
 import { expect, countResources, haveResource } from '@aws-cdk/assert';
-import { createTestTarget } from '../context'
+import { testTarget } from '../context'
 
 test('Subnet', () => {
-  const stack = createTestTarget();
+  const stack = testTarget();
   expect(stack).to(countResources('AWS::EC2::Subnet', 6))
   expect(stack).to(haveResource('AWS::EC2::Subnet', {
     CidrBlock: '10.1.11.0/24',

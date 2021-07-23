@@ -12,7 +12,7 @@ export abstract class Resource {
     this.envType = this.scope.node.tryGetContext('evnType');
   }
 
-  protected getFullName(name: string): string {
-    return `${this.systemName}-${this.envType}-${name}`
+  protected makeName(lastPartOfResourceName: string): string {
+    return `${this.systemName}-${this.envType}-${lastPartOfResourceName}`
   }
 }

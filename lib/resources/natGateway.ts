@@ -22,7 +22,7 @@ export class NatGateway extends Resource {
     return new CfnNatGateway(this.scope, `NatGateway1${azSuffix}`, {
       allocationId: eip.attrAllocationId,
       subnetId: subnet.ref,
-      tags: [{ key: 'Name', value: this.getFullName(`ngw-1${azSuffix}`) }]
+      tags: [{ key: 'Name', value: this.makeName(`ngw-1${azSuffix}`) }]
     })
   }
 }

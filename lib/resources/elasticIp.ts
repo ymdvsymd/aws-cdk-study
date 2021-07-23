@@ -15,7 +15,7 @@ export class ElasticIp extends Resource {
   private create(azSuffix: string): CfnEIP {
     return new CfnEIP(this.scope, `ElasticIpNgw1${azSuffix}`, {
       domain: 'vpc',
-      tags: [{ key: 'Name', value: this.getFullName(`eip-ngw-1${azSuffix}`) }]
+      tags: [{ key: 'Name', value: this.makeName(`eip-ngw-1${azSuffix}`) }]
     });
   }
 }

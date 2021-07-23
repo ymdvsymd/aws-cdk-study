@@ -10,7 +10,7 @@ export class Vpc extends Resource {
 
     this.self = new CfnVPC(scope, 'Vpc', {
       cidrBlock: '10.1.0.0/16',
-      tags: [{ key: 'Name', value: this.getFullName('vpc') }]
+      tags: [{ key: 'Name', value: this.makeName('vpc') }]
     });
   }
 }

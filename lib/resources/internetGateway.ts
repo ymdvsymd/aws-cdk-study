@@ -9,7 +9,7 @@ export class InternetGateway extends Resource {
     super(scope);
 
     this.igw = new CfnInternetGateway(scope, 'InternetGateway', {
-      tags: [{ key: 'Name', value: this.getFullName('igw') }]
+      tags: [{ key: 'Name', value: this.makeName('igw') }]
     });
 
     new CfnVPCGatewayAttachment(scope, 'VPCGatewayAttachment', {

@@ -28,7 +28,7 @@ export class Subnet extends Resource {
       cidrBlock: cidr,
       vpcId: this.vpc.ref,
       availabilityZone: `ap-northeast-1${azSuffix}`,
-      tags: [{ key: 'Name', value: this.getFullName(`subnet-${purpose}-1${azSuffix}`) }]
+      tags: [{ key: 'Name', value: this.makeName(`subnet-${purpose}-1${azSuffix}`) }]
     });
   }
 }
