@@ -1,6 +1,6 @@
 import * as cdk from '@aws-cdk/core';
 import { CfnNetworkAcl, CfnSubnet, CfnVPC, CfnNetworkAclEntry, CfnSubnetNetworkAclAssociation } from '@aws-cdk/aws-ec2';
-import { ConvertToId, Resource } from './core/resource';
+import { capitalize, upperCamelCase, Resource } from './core/resource';
 import { Subnet } from './subnet';
 import { Vpc } from './vpc';
 
@@ -20,7 +20,7 @@ export class NetworkAcl extends Resource {
   }
 
   private create(nameSuffix: string, subnets: CfnSubnet[]): CfnNetworkAcl {
-    const networkAcl = new CfnNetworkAcl(this.scope, `NetworkAcl${ConvertToId(nameSuffix)}`, {
+    const networkAcl = new CfnNetworkAcl(this.scope, `NetworkAcl${upperCamelCase(nameSuffix)}`, {
       vpcId: this.vpc.ref,
       tags: [{ key: 'Name', value: this.makeName(`nacl-${nameSuffix}`) }]
     });
@@ -34,7 +34,7 @@ export class NetworkAcl extends Resource {
   }
 
   private addEntryTo(networkAcl: CfnNetworkAcl, nameSuffix: string, direction: 'inbound' | 'outbound') {
-    new CfnNetworkAclEntry(this.scope, `NetworkAclEntry${ConvertToId(direction) + ConvertToId(nameSuffix)}`, {
+    new CfnNetworkAclEntry(this.scope, `NetworkAclEntry${upperCamelCase(direction) + capitalize(nameSuffix)}`, {
       networkAclId: networkAcl.ref,
       protocol: -1,
       ruleAction: 'allow',
@@ -47,7 +47,7 @@ export class NetworkAcl extends Resource {
   private associateWith(networkAcl: CfnNetworkAcl, nameSuffix: string, subnets: CfnSubnet[]) {
     let no = 0;
     for (const subnet of subnets) {
-      new CfnSubnetNetworkAclAssociation(this.scope, `NetworkAclAssociation${ConvertToId(nameSuffix) + no}`, {
+      new CfnSubnetNetworkAclAssociation(this.scope, `NetworkAclAssociation${upperCamelCase(nameSuffix) + no}`, {
         networkAclId: networkAcl.ref,
         subnetId: subnet.ref
       });

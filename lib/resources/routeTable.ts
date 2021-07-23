@@ -1,6 +1,6 @@
 import * as cdk from '@aws-cdk/core';
 import { CfnInternetGateway, CfnNatGateway, CfnRoute, CfnRouteTable, CfnSubnet, CfnSubnetRouteTableAssociation, CfnVPC } from '@aws-cdk/aws-ec2';
-import { ConvertToId, Resource } from './core/resource';
+import { upperCamelCase, Resource } from './core/resource';
 import { Subnet } from './subnet';
 import { NatGateway } from './natGateway';
 import { Vpc } from './vpc';
@@ -46,7 +46,7 @@ export class RouteTable extends Resource {
     routes: { destination: string, target?: CfnInternetGateway | CfnNatGateway }[],
     subnets: CfnSubnet[]
   ): CfnRouteTable {
-    const routeTable = new CfnRouteTable(this.scope, `RouteTable${ConvertToId(nameSuffix)}`, {
+    const routeTable = new CfnRouteTable(this.scope, `RouteTable${upperCamelCase(nameSuffix)}`, {
       vpcId: this.vpc.ref,
       tags: [{ key: 'Name', value: this.makeName(`rtb-${nameSuffix}`) }]
     });
@@ -65,7 +65,7 @@ export class RouteTable extends Resource {
   ) {
     let no = 0;
     for (const routeInfo of routes) {
-      const route = new CfnRoute(this.scope, `Route${ConvertToId(nameSuffix) + no}`, {
+      const route = new CfnRoute(this.scope, `Route${upperCamelCase(nameSuffix) + no}`, {
         routeTableId: routeTable.ref,
         destinationCidrBlock: routeInfo.destination
       });
@@ -87,7 +87,7 @@ export class RouteTable extends Resource {
   ) {
     let no = 0;
     for (const subnet of subnets) {
-      new CfnSubnetRouteTableAssociation(this.scope, `Association${ConvertToId(nameSuffix) + no}`, {
+      new CfnSubnetRouteTableAssociation(this.scope, `Association${upperCamelCase(nameSuffix) + no}`, {
         routeTableId: routeTable.ref,
         subnetId: subnet.ref
       });

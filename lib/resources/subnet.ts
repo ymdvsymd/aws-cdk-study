@@ -1,6 +1,6 @@
 import * as cdk from '@aws-cdk/core';
 import { CfnSubnet, CfnVPC } from '@aws-cdk/aws-ec2';
-import { ConvertToId, Resource } from './core/resource';
+import { upperCamelCase, Resource } from './core/resource';
 import { Vpc } from './vpc';
 
 export class Subnet extends Resource {
@@ -26,7 +26,7 @@ export class Subnet extends Resource {
 
   private create(nameSuffix: string, cidr: string): CfnSubnet {
     const azSuffix = nameSuffix.slice(-1);
-    return new CfnSubnet(this.scope, `Subnet${ConvertToId(nameSuffix)}`, {
+    return new CfnSubnet(this.scope, `Subnet${upperCamelCase(nameSuffix)}`, {
       cidrBlock: cidr,
       vpcId: this.vpc.ref,
       availabilityZone: `ap-northeast-1${azSuffix}`,
