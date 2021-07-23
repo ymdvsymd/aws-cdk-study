@@ -16,3 +16,7 @@ export abstract class Resource {
     return `${this.systemName}-${this.envType}-${lastPartOfResourceName}`
   }
 }
+
+export function ConvertToId(letter: string) {
+  return letter.charAt(0).toUpperCase() + letter.slice(1).replace('-', '');
+}

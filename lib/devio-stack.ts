@@ -4,15 +4,26 @@ import { Subnet } from './resources/subnet';
 import { InternetGateway } from './resources/internetGateway';
 import { ElasticIp } from './resources/elasticIp';
 import { NatGateway } from './resources/natGateway';
+import { RouteTable } from './resources/routeTable';
+import { NetworkAcl } from './resources/networkAcl';
 
 export class DevioStack extends cdk.Stack {
+  readonly vpc: Vpc;
+  readonly subnet: Subnet;
+  readonly igw: InternetGateway;
+  readonly eip: ElasticIp;
+  readonly ngw: NatGateway;
+  readonly rtb: RouteTable;
+  readonly nacl: NetworkAcl;
+    
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
-
-    const vpc = new Vpc(this);
-    const subnet = new Subnet(this, vpc.self);
-    const igw = new InternetGateway(this, vpc.self);
-    const eip = new ElasticIp(this);
-    const ngw = new NatGateway(this, eip, subnet.web1a, subnet.web1c);
+    this.vpc = new Vpc(this);
+    this.subnet = new Subnet(this, this.vpc);
+    this.igw = new InternetGateway(this, this.vpc);
+    this.eip = new ElasticIp(this);
+    this.ngw = new NatGateway(this, this.eip, this.subnet.web1a, this.subnet.web1c);
+    this.rtb = new RouteTable(this, this.vpc, this.subnet, this.igw, this.ngw);
+    this.nacl = new NetworkAcl(this, this.vpc, this.subnet);
   }
 }

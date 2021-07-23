@@ -10,12 +10,12 @@ export class NatGateway extends Resource {
   constructor(
     scope: cdk.Construct,
     elasticIp: ElasticIp,
-    publicSubnet1a: CfnSubnet,
-    publicSubnet1c: CfnSubnet
+    webSubnet1a: CfnSubnet,
+    webSubnet1c: CfnSubnet
   ) {
     super(scope);
-    this.ngw1a = this.create('a', elasticIp.ngw1a, publicSubnet1a);
-    this.ngw1a = this.create('c', elasticIp.ngw1c, publicSubnet1c);
+    this.ngw1a = this.create('a', elasticIp.ngw1a, webSubnet1a);
+    this.ngw1c = this.create('c', elasticIp.ngw1c, webSubnet1c);
   }
 
   private create(azSuffix: string, eip: CfnEIP, subnet: CfnSubnet): CfnNatGateway {

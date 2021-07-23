@@ -1,20 +1,21 @@
 import * as cdk from '@aws-cdk/core';
 import { CfnInternetGateway, CfnVPCGatewayAttachment, CfnVPC } from '@aws-cdk/aws-ec2';
 import { Resource } from './core/resource';
+import { Vpc } from './vpc';
 
 export class InternetGateway extends Resource {
-  public readonly igw: CfnInternetGateway;
+  public readonly self: CfnInternetGateway;
 
-  constructor(scope: cdk.Construct, vpc: CfnVPC) {
+  constructor(scope: cdk.Construct, vpc: Vpc) {
     super(scope);
 
-    this.igw = new CfnInternetGateway(scope, 'InternetGateway', {
+    this.self = new CfnInternetGateway(scope, 'InternetGateway', {
       tags: [{ key: 'Name', value: this.makeName('igw') }]
     });
 
     new CfnVPCGatewayAttachment(scope, 'VPCGatewayAttachment', {
-      vpcId: vpc.ref,
-      internetGatewayId: this.igw.ref
+      vpcId: vpc.self.ref,
+      internetGatewayId: this.self.ref
     });
   }
 }
