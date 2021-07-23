@@ -18,6 +18,7 @@ test('NetworkAcl', () => {
     Tags: [{ 'Key': 'Name', 'Value': 'ymd-test-nacl-db' }]
   }));
 
+  expect(stack).to(countResources('AWS::EC2::NetworkAclEntry', 6));
   expect(stack).to(countResourcesLike('AWS::EC2::NetworkAclEntry', 3, {
     NetworkAclId: anything(),
     Protocol: -1,
