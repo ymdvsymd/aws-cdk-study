@@ -15,6 +15,10 @@ export abstract class Resource {
   protected makeName(lastPartOfResourceName: string): string {
     return `${this.systemName}-${this.envType}-${lastPartOfResourceName}`
   }
+
+  protected makeNameTag(lastPartOfResourceName: string): cdk.CfnTag {
+    return { key: 'Name', value: this.makeName(lastPartOfResourceName) }
+  }
 }
 
 export function upperCamelCase(str: string) {

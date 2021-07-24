@@ -7,6 +7,7 @@ import { NatGateway } from './resources/natGateway';
 import { RouteTable } from './resources/routeTable';
 import { NetworkAcl } from './resources/networkAcl';
 import { IamRole } from './resources/iamRole';
+import { SecurityGroup } from './resources/securityGroup';
 
 export class DevioStack extends cdk.Stack {
   readonly vpc: Vpc;
@@ -17,6 +18,7 @@ export class DevioStack extends cdk.Stack {
   readonly rtb: RouteTable;
   readonly nacl: NetworkAcl;
   readonly role: IamRole;
+  readonly sg: SecurityGroup;
     
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
@@ -28,5 +30,6 @@ export class DevioStack extends cdk.Stack {
     this.rtb = new RouteTable(this, this.vpc, this.subnet, this.igw, this.ngw);
     this.nacl = new NetworkAcl(this, this.vpc, this.subnet);
     this.role = new IamRole(this);
+    this.sg = new SecurityGroup(this, this.vpc);
   }
 }
