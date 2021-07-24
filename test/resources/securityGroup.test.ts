@@ -1,4 +1,4 @@
-import { expect, countResources, countResourcesLike, haveResource, anything } from '@aws-cdk/assert';
+import { expect, countResources, haveResource } from '@aws-cdk/assert';
 import { testTarget } from '../context'
 
 test('SecurityGroup', () => {

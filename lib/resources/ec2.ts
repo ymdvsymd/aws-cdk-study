@@ -1,7 +1,7 @@
 import * as cdk from '@aws-cdk/core';
 import { CfnInstance, CfnSecurityGroup, CfnSubnet } from '@aws-cdk/aws-ec2';
-import { CfnInstanceProfile } from '@aws-cdk/aws-iam';
-import { Resource, upperCamelCase } from './core/resource';
+import { CfnRole, CfnInstanceProfile } from '@aws-cdk/aws-iam';
+import { Resource } from './core/resource';
 
 export class Ec2 extends Resource {
   private static readonly imageId = 'ami-06631ebafb3ae5d34';
@@ -10,14 +10,22 @@ export class Ec2 extends Resource {
   readonly instance1a: CfnInstance;
   readonly instance1c: CfnInstance;
 
+  private readonly instanceProfile: CfnInstanceProfile;
+
   constructor(
     scope: cdk.Construct,
+    role: CfnRole,
+    private readonly securityGroup: CfnSecurityGroup,
     subnetApp1a: CfnSubnet,
-    subnetApp1c: CfnSubnet,
-    private readonly instanceProfile: CfnInstanceProfile,
-    private readonly securityGroup: CfnSecurityGroup
+    subnetApp1c: CfnSubnet
   ) {
     super(scope);
+
+    this.instanceProfile = new CfnInstanceProfile(this.scope, 'InstanceProfileEc2', {
+      roles: [role.ref],
+      instanceProfileName: role.roleName
+    });
+
     this.instance1a = this.create('a', subnetApp1a);
     this.instance1c = this.create('c', subnetApp1c);
   }

@@ -1,6 +1,7 @@
 import * as cdk from '@aws-cdk/core';
 import { CfnInternetGateway, CfnNatGateway, CfnRoute, CfnRouteTable, CfnSubnet, CfnSubnetRouteTableAssociation, CfnVPC } from '@aws-cdk/aws-ec2';
-import { upperCamelCase, Resource } from './core/resource';
+import { Resource } from './core/resource';
+import { upperCamelCase } from './core/string';
 import { Subnet } from './subnet';
 import { NatGateway } from './natGateway';
 import { Vpc } from './vpc';

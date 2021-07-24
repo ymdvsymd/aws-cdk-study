@@ -1,5 +1,5 @@
 import * as cdk from '@aws-cdk/core';
-import { CfnInternetGateway, CfnVPCGatewayAttachment, CfnVPC } from '@aws-cdk/aws-ec2';
+import { CfnInternetGateway, CfnVPCGatewayAttachment } from '@aws-cdk/aws-ec2';
 import { Resource } from './core/resource';
 import { Vpc } from './vpc';
 

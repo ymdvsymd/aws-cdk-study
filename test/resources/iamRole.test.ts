@@ -35,10 +35,4 @@ test('IamRole', () => {
     ],
     RoleName: 'ymd-test-role-rds'
   }));
-
-  expect(stack).to(countResources('AWS::IAM::InstanceProfile', 1));
-  expect(stack).to(haveResource('AWS::IAM::InstanceProfile', {
-    Roles: [{ Ref: 'RoleEc2' }],
-    InstanceProfileName: 'ymd-test-role-ec2'
-  }));
 });

@@ -33,6 +33,6 @@ export class DevioStack extends cdk.Stack {
     this.nacl = new NetworkAcl(this, this.vpc, this.subnet);
     this.role = new IamRole(this);
     this.sg = new SecurityGroup(this, this.vpc);
-    this.ec2 = new Ec2(this, this.subnet.app1a, this.subnet.app1c, this.role.instanceProfileEc2, this.sg.ec2);
+    this.ec2 = new Ec2(this, this.role.ec2, this.sg.ec2, this.subnet.app1a, this.subnet.app1c);
   }
 }

@@ -3,6 +3,13 @@ import { testTarget } from '../context'
 
 test('Ec2', () => {
   const stack = testTarget(); expect(stack).to(countResources('AWS::EC2::Instance', 2));
+
+  expect(stack).to(countResources('AWS::IAM::InstanceProfile', 1));
+  expect(stack).to(haveResource('AWS::IAM::InstanceProfile', {
+    Roles: [{ Ref: 'RoleEc2' }],
+    InstanceProfileName: 'ymd-test-role-ec2'
+  }));
+
   expect(stack).to(haveResource('AWS::EC2::Instance', {
     AvailabilityZone: 'ap-northeast-1a',
     IamInstanceProfile: { Ref: 'InstanceProfileEc2' },

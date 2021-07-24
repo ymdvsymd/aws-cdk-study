@@ -1,6 +1,7 @@
 import * as cdk from '@aws-cdk/core';
 import { CfnSecurityGroup, CfnVPC, CfnSecurityGroupIngressProps, CfnSecurityGroupIngress } from '@aws-cdk/aws-ec2';
-import { upperCamelCase, Resource } from './core/resource';
+import { Resource } from './core/resource';
+import { upperCamelCase } from './core/string';
 import { Vpc } from './vpc';
 
 export class SecurityGroup extends Resource {

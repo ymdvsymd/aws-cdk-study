@@ -1,6 +1,7 @@
 import * as cdk from '@aws-cdk/core';
 import { CfnNetworkAcl, CfnSubnet, CfnVPC, CfnNetworkAclEntry, CfnSubnetNetworkAclAssociation } from '@aws-cdk/aws-ec2';
-import { capitalize, upperCamelCase, Resource } from './core/resource';
+import { Resource } from './core/resource';
+import { capitalize, upperCamelCase } from './core/string';
 import { Subnet } from './subnet';
 import { Vpc } from './vpc';
 
