@@ -25,22 +25,22 @@ export class NetworkAcl extends Resource {
       tags: [{ key: 'Name', value: this.makeName(`nacl-${nameSuffix}`) }]
     });
 
-    this.addEntryTo(networkAcl, nameSuffix, 'inbound');
-    this.addEntryTo(networkAcl, nameSuffix, 'outbound');
+    this.addEntryTo(networkAcl, nameSuffix, 'ingress');
+    this.addEntryTo(networkAcl, nameSuffix, 'egress');
 
     this.associateWith(networkAcl, nameSuffix, subnets);
 
     return networkAcl;
   }
 
-  private addEntryTo(networkAcl: CfnNetworkAcl, nameSuffix: string, direction: 'inbound' | 'outbound') {
+  private addEntryTo(networkAcl: CfnNetworkAcl, nameSuffix: string, direction: 'ingress' | 'egress') {
     new CfnNetworkAclEntry(this.scope, `NetworkAclEntry${upperCamelCase(direction) + capitalize(nameSuffix)}`, {
       networkAclId: networkAcl.ref,
       protocol: -1,
       ruleAction: 'allow',
       ruleNumber: 100,
       cidrBlock: '0.0.0.0/0',
-      egress: direction == 'outbound'
+      egress: direction === 'egress'
     });
   }
 
