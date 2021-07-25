@@ -1,3 +1,4 @@
+import * as fs from 'fs';
 import * as cdk from '@aws-cdk/core';
 import { CfnInstance, CfnSecurityGroup, CfnSubnet } from '@aws-cdk/aws-ec2';
 import { CfnRole, CfnInstanceProfile } from '@aws-cdk/aws-iam';
@@ -38,7 +39,9 @@ export class Ec2 extends Resource {
       instanceType: Ec2.instanceType,
       securityGroupIds: [this.securityGroup.ref],
       subnetId: subnet.ref,
-      tags: [this.makeNameTag(`ec2-1${azSuffix}`)]
+      tags: [this.makeNameTag(`ec2-1${azSuffix}`)],
+      // CFn でユーザーデータを記述する場合は Base64 でエンコードしなければならない
+      userData: fs.readFileSync(`${__dirname}/../scripts/userData.sh`, 'base64')
     });
   }
 }
