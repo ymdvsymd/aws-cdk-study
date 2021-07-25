@@ -2,7 +2,7 @@ import { expect, countResources, haveResource } from '@aws-cdk/assert';
 import { testTarget } from '../context'
 
 test('Alb', () => {
-  const stack = testTarget(); expect(stack).to(countResources('AWS::EC2::Instance', 2));
+  const stack = testTarget();
 
   expect(stack).to(countResources('AWS::ElasticLoadBalancingV2::LoadBalancer', 1));
   expect(stack).to(haveResource('AWS::ElasticLoadBalancingV2::LoadBalancer', {
