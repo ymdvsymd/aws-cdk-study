@@ -11,6 +11,7 @@ import { SecurityGroup } from './resources/securityGroup';
 import { Ec2 } from './resources/ec2';
 import { Alb } from './resources/alb';
 import { SecretsManager } from './resources/secretsManager';
+import { Rds } from './resources/rds';
 
 export class DevioStack extends cdk.Stack {
   readonly vpc: Vpc;
@@ -25,6 +26,7 @@ export class DevioStack extends cdk.Stack {
   readonly ec2: Ec2;
   readonly alb: Alb;
   readonly secretsManager: SecretsManager;
+  readonly rds: Rds;
     
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
@@ -40,5 +42,6 @@ export class DevioStack extends cdk.Stack {
     this.ec2 = new Ec2(this, this.role.ec2, this.sg.ec2, this.subnet.app1a, this.subnet.app1c);
     this.alb = new Alb(this, this.vpc, this.subnet.web1a, this.subnet.web1c, this.sg.alb, this.ec2);
     this.secretsManager = new SecretsManager(this);
+    this.rds = new Rds(this, this.subnet.db1a, this.subnet.db1c, this.sg.rds, this.secretsManager);
   }
 }
