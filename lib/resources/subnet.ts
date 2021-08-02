@@ -1,7 +1,7 @@
 import * as cdk from '@aws-cdk/core';
 import { CfnSubnet, CfnVPC } from '@aws-cdk/aws-ec2';
 import { Resource } from './core/resource';
-import { upperCamelCase } from './core/string';
+import { upperCamelCase } from '../string';
 import { Vpc } from './vpc';
 
 export class Subnet extends Resource {

@@ -3,7 +3,7 @@ import * as cdk from '@aws-cdk/core';
 import { CfnDBSubnetGroup, CfnDBClusterParameterGroup, CfnDBParameterGroup, CfnDBCluster } from '@aws-cdk/aws-rds';
 import { CfnSecurityGroup, CfnSubnet } from '@aws-cdk/aws-ec2';
 import { Resource } from './core/resource';
-import { upperCamelCase } from './core/string';
+import { upperCamelCase } from '../string';
 import { SecretsManager } from './secretsManager';
 
 export class Rds extends Resource {

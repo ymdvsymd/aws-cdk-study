@@ -1,7 +1,7 @@
 import * as cdk from '@aws-cdk/core';
 import { CfnRole, PolicyDocument, PolicyStatement, PolicyStatementProps, Effect, ServicePrincipal } from '@aws-cdk/aws-iam';
 import { Resource } from './core/resource';
-import { upperCamelCase } from './core/string';
+import { upperCamelCase } from '../string';
 
 export class IamRole extends Resource {
   readonly ec2: CfnRole;
