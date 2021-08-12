@@ -42,6 +42,6 @@ export class DevioStack extends cdk.Stack {
     this.ec2 = new Ec2(this, this.role.ec2, this.sg.ec2, this.subnet.app1a, this.subnet.app1c);
     this.alb = new Alb(this, this.vpc, this.subnet.web1a, this.subnet.web1c, this.sg.alb, this.ec2);
     this.secretsManager = new SecretsManager(this);
-    this.rds = new Rds(this, this.subnet.db1a, this.subnet.db1c, this.sg.rds, this.secretsManager);
+    this.rds = new Rds(this, this.subnet.db1a, this.subnet.db1c, this.sg.rds, this.secretsManager, this.role.rds);
   }
 }
